@@ -10,9 +10,9 @@ const Page = async () => {
     headers: await headers(),
   });
 
-  // if (!!session) {
-  //   redirect("/");
-  // }
+  if (!!session) {
+    redirect("/");
+  }
 
   return <SignInView />
 }
