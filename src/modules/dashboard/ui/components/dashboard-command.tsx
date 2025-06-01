@@ -2,14 +2,13 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { 
-  CommandResponsiveDialog, 
-  CommandInput, 
-  CommandItem, 
+import {
+  CommandResponsiveDialog,
+  CommandInput,
+  CommandItem,
   CommandList,
   CommandGroup,
-  CommandEmpty,
-  CommandDialog
+  CommandEmpty
 } from "@/components/ui/command";
 // import { useTRPC } from "@/trpc/client";
 import { GeneratedAvatar } from "@/components/generated-avatar";
@@ -38,7 +37,7 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
   // );
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
       <CommandInput
         placeholder="Find a meeting or agent..."
         value={search}
@@ -87,6 +86,6 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
           ))} */}
         </CommandGroup>
       </CommandList>
-    </CommandDialog>
+    </CommandResponsiveDialog>
   );
 };
