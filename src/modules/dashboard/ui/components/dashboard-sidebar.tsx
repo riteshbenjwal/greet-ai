@@ -19,7 +19,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-// import { DashboardTrial } from "./dashboard-trial";
+import { DashboardTrial } from "./dashboard-trial";
 import { DashboardUserButton } from "./dashboard-user-button";
 
 const firstSection = [
@@ -51,7 +51,7 @@ export const DashboardSidebar = () => {
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href="/" className="flex items-center gap-2 px-2 pt-2">
           <Image src="/logo.svg" height={36} width={36} alt="Meet.AI" />
-          <p className="text-2xl font-semibold">Greet.AI</p>
+          <p className="text-2xl font-semibold">Meet.AI</p>
         </Link>
       </SidebarHeader>
       <div className="px-4 py-2">
@@ -67,7 +67,8 @@ export const DashboardSidebar = () => {
                     asChild
                     className={cn(
                       "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
-                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10"
+                      pathname === item.href &&
+                        "bg-linear-to-r/oklch border-[#5D6B68]/10"
                     )}
                     isActive={pathname === item.href}
                   >
@@ -95,7 +96,8 @@ export const DashboardSidebar = () => {
                     asChild
                     className={cn(
                       "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
-                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10"
+                      pathname === item.href &&
+                        "bg-linear-to-r/oklch border-[#5D6B68]/10"
                     )}
                     isActive={pathname === item.href}
                   >
@@ -113,9 +115,9 @@ export const DashboardSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="text-white">
-       {/* <DashboardTrial /> */}
-        <DashboardUserButton /> 
+        <DashboardTrial />
+        <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 };

@@ -10,7 +10,7 @@ import {
   CommandGroup,
   CommandEmpty
 } from "@/components/ui/command";
-// import { useTRPC } from "@/trpc/client";
+import { useTRPC } from "@/trpc/client";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 
 interface Props {
@@ -22,19 +22,19 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
   const router = useRouter();
   const [search, setSearch] = useState("");
 
-  // const trpc = useTRPC();
-  // const meetings = useQuery(
-  //   trpc.meetings.getMany.queryOptions({
-  //     search,
-  //     pageSize: 100,
-  //   })
-  // );
-  // const agents = useQuery(
-  //   trpc.agents.getMany.queryOptions({
-  //     search,
-  //     pageSize: 100,
-  //   })
-  // );
+  const trpc = useTRPC();
+  const meetings = useQuery(
+    trpc.meetings.getMany.queryOptions({
+      search,
+      pageSize: 100,
+    })
+  );
+  const agents = useQuery(
+    trpc.agents.getMany.queryOptions({
+      search,
+      pageSize: 100,
+    })
+  );
 
   return (
     <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
@@ -50,7 +50,7 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
               No meetings found
             </span>
           </CommandEmpty>
-          {/* {meetings.data?.items.map((meeting) => (
+          {meetings.data?.items.map((meeting) => (
             <CommandItem
               onSelect={() => {
                 router.push(`/meetings/${meeting.id}`);
@@ -60,7 +60,7 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
             >
               {meeting.name}
             </CommandItem>
-          ))} */}
+          ))}
         </CommandGroup>
         <CommandGroup heading="Agents">
           <CommandEmpty>
@@ -68,7 +68,7 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
               No agents found
             </span>
           </CommandEmpty>
-          {/* {agents.data?.items.map((agent) => (
+          {agents.data?.items.map((agent) => (
             <CommandItem
               onSelect={() => {
                 router.push(`/agents/${agent.id}`);
@@ -83,7 +83,7 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
               />
               {agent.name}
             </CommandItem>
-          ))} */}
+          ))}
         </CommandGroup>
       </CommandList>
     </CommandResponsiveDialog>
