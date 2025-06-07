@@ -27,7 +27,7 @@ interface AgentFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
   initialValues?: AgentGetOne;
-};
+}
 
 export const AgentForm = ({
   onSuccess,
@@ -42,12 +42,11 @@ export const AgentForm = ({
     trpc.agents.create.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.agents.getMany.queryOptions({}),
+          trpc.agents.getMany.queryOptions({})
         );
-        // await queryClient.invalidateQueries(
-        //   trpc.premium.getFreeUsage.queryOptions(),
-        // );
-
+        await queryClient.invalidateQueries(
+          trpc.premium.getFreeUsage.queryOptions()
+      );
         onSuccess?.();
       },
       onError: (error) => {
@@ -57,19 +56,19 @@ export const AgentForm = ({
           router.push("/upgrade");
         }
       },
-    }),
+    })
   );
 
   const updateAgent = useMutation(
     trpc.agents.update.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.agents.getMany.queryOptions({}),
+          trpc.agents.getMany.queryOptions({})
         );
 
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
-            trpc.agents.getOne.queryOptions({ id: initialValues.id }),
+            trpc.agents.getOne.queryOptions({ id: initialValues.id })
           );
         }
         onSuccess?.();
@@ -77,7 +76,7 @@ export const AgentForm = ({
       onError: (error) => {
         toast.error(error.message);
       },
-    }),
+    })
   );
 
   const form = useForm<z.infer<typeof agentsInsertSchema>>({

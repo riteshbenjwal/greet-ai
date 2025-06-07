@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -31,7 +32,7 @@ interface MeetingFormProps {
   onSuccess?: (id?: string) => void;
   onCancel?: () => void;
   initialValues?: MeetingGetOne;
-};
+}
 
 export const MeetingForm = ({
   onSuccess,
@@ -49,41 +50,41 @@ export const MeetingForm = ({
     trpc.agents.getMany.queryOptions({
       pageSize: 100,
       search: agentSearch,
-    }),
+    })
   );
 
   const createMeeting = useMutation(
     trpc.meetings.create.mutationOptions({
       onSuccess: async (data) => {
         await queryClient.invalidateQueries(
-          trpc.meetings.getMany.queryOptions({}),
+          trpc.meetings.getMany.queryOptions({})
         );
-        // await queryClient.invalidateQueries(
-        //   trpc.premium.getFreeUsage.queryOptions(),
-        // );
+        await queryClient.invalidateQueries(
+          trpc.premium.getFreeUsage.queryOptions()
+        );
 
         onSuccess?.(data.id);
       },
-      onError: (error) => {
+      onError: (error: any) => {
         toast.error(error.message);
 
         if (error.data?.code === "FORBIDDEN") {
           router.push("/upgrade");
         }
       },
-    }),
+    })
   );
 
   const updateMeeting = useMutation(
     trpc.meetings.update.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.meetings.getMany.queryOptions({}),
+          trpc.meetings.getMany.queryOptions({})
         );
 
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
-            trpc.meetings.getOne.queryOptions({ id: initialValues.id }),
+            trpc.meetings.getOne.queryOptions({ id: initialValues.id })
           );
         }
         onSuccess?.();
@@ -91,7 +92,7 @@ export const MeetingForm = ({
       onError: (error) => {
         toast.error(error.message);
       },
-    }),
+    })
   );
 
   const form = useForm<z.infer<typeof meetingsInsertSchema>>({
@@ -115,7 +116,10 @@ export const MeetingForm = ({
 
   return (
     <>
-      <NewAgentDialog open={openNewAgentDialog} onOpenChange={setOpenNewAgentDialog} />
+      <NewAgentDialog
+        open={openNewAgentDialog}
+        onOpenChange={setOpenNewAgentDialog}
+      />
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -151,7 +155,7 @@ export const MeetingForm = ({
                           />
                           <span>{agent.name}</span>
                         </div>
-                      )
+                      ),
                     }))}
                     onSelect={field.onChange}
                     onSearch={setAgentSearch}
